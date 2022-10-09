@@ -2,20 +2,19 @@ package agh.ics.oop;
 import static java.lang.System.out;
 
 public class World {
-    public static void run(String[] args){
-        out.println("Zwierzak idzie do przodu");
+    public static void run(Direction[] args){
         for (Integer i=0;i<args.length;i++) {
             switch (args[i]) {
-                case "f":
+                case FORWARD:
                     out.println("Zwierzak idzie do przodu");
                     break;
-                case "b":
+                case BACKWARD:
                     out.println("Zwierzak idzie do tyłu");
                     break;
-                case "r":
+                case LEFT:
                     out.println("Zwierzak skręca w prawo");
                     break;
-                case "l":
+                case RIGHT:
                     out.println("Zwierzak skręca w lewo");
                     break;
                 default:
@@ -25,7 +24,8 @@ public class World {
     }
     public static void main(String[] args){
         out.println("system wystartował");
-        run(args);
+        Direction[] dirarg = Direction.strArrtoDir(args);
+        run(dirarg);
         out.println("system zakończył działanie");
     }
 }
