@@ -25,9 +25,21 @@ public class World {
         }
     }
     public static void main(String[] args){
-        out.println("system wystartował");
-        Direction[] dirarg = Direction.strArrtoDir(args);
-        run(dirarg);
-        out.println("system zakończył działanie");
+
+        out.println(-1%4);
+//Lab1
+//        out.println("system wystartował");
+//        Direction[] dirarg = Direction.strArrtoDir(args);
+//        run(dirarg);
+//        out.println("system zakończył działanie");
+        Vector2d position1 = new Vector2d(1,2);
+        System.out.println(position1);
+        Vector2d position2 = new Vector2d(-2,1);
+        System.out.println(position2);
+        System.out.println(position1.add(position2));
+        MapDirection kierunek=MapDirection.SOUTH;
+        Vector2d a=kierunek.toUnitVector();
+        System.out.println(a);
     }
+
 }
