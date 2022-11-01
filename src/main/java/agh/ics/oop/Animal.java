@@ -3,15 +3,37 @@ package agh.ics.oop;
 public class Animal {
     private Vector2d position=new Vector2d(2,2);
     private MapDirection orientation=MapDirection.NORTH;
+    private IWorldMap map;
     public String toString(){
-        return "Pozycja: "+position+" kierunek: "+orientation;
+        return switch(orientation){
+            case NORTH -> "^";
+            case SOUTH -> "V";
+            case EAST -> ">";
+            case WEST -> "<";
+            };
+
+    }
+    public Animal(){
+
+    };
+    public Animal(IWorldMap map){
+        this.map=map;
+    }
+    public Animal(IWorldMap map,Vector2d initial){
+        this.map=map;
+        this.position=initial;
+    }
+    public Vector2d getPosition(){
+        return this.position;
     }
     public boolean isAt(Vector2d position){
         return this.position.equals(position);
     }
     public void move(MoveDirection dir){
+        Vector2d moveTo = new Vector2d(-1,-1);
         if (dir != null){
             switch(dir){
+
                 case LEFT:
                     this.orientation=this.orientation.previous();
                     break;
@@ -19,17 +41,17 @@ public class Animal {
                     this.orientation=this.orientation.next();
                     break;
                 case FORWARD:
-                    if (this.position.add(this.orientation.toUnitVector()).precedes(new Vector2d(4,4))&&this.position.add(this.orientation.toUnitVector()).follows(new Vector2d(0,0))){
-                        this.position=this.position.add(this.orientation.toUnitVector());
-                    }
+                        moveTo=this.position.add(this.orientation.toUnitVector());
                     break;
                 case BACKWARD:
-                    if (this.position.add(this.orientation.toUnitVector().opposite()).precedes(new Vector2d(4,4))&&this.position.add(this.orientation.toUnitVector().opposite()).follows(new Vector2d(0,0))){
-                        this.position=this.position.add(this.orientation.toUnitVector().opposite());}
+                        moveTo=this.position.add(this.orientation.toUnitVector().opposite());
                     break;
                 default:
                     break;
             }
+        }
+        if (map.canMoveTo(moveTo)){
+            position=moveTo;
         }
     }
 }

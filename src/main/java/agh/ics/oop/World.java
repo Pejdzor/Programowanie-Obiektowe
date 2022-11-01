@@ -6,13 +6,12 @@ public class World {
 
     public static void main(String[] args){
 
-        Animal dog=new Animal();
-        System.out.println(dog);
-        MoveDirection[] commands = OptionParser.parse(args);
-        for (MoveDirection command :commands){
-            dog.move(command);
-        }
-        System.out.println(dog);
+        MoveDirection[] directions = OptionParser.parse(args);
+        IWorldMap map = new RectangularMap(10, 5);
+        Vector2d[] positions = { new Vector2d(2,2), new Vector2d(3,4) };
+        IEngine engine = new SimulationEngine(directions, map, positions);
+        engine.run();
+        out.print(map.toString());
     }
 
 
