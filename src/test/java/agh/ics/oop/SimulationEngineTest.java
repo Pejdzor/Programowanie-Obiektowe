@@ -20,5 +20,7 @@ class SimulationEngineTest {
         engine.run();
         assertEquals(map.getAnimals().get(1).getPosition(), new Vector2d(3, 4));
         assertEquals(map.getAnimals().get(0).getPosition(), new Vector2d(2, 0));
+        MapVisualizer mapka= new MapVisualizer(map);
+        System.out.print(mapka.draw(new Vector2d(0,0),new Vector2d(10,5)));
     }
 }
