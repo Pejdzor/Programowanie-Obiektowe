@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class GrassField extends AbstractWorldMap{
-
     public List<Grass> grass= new ArrayList<Grass>();
     public int nograss;
     public GrassField(int n){
@@ -37,12 +36,20 @@ public class GrassField extends AbstractWorldMap{
     public Vector2d getRightTop(){
         int x=grass.get(0).getPosition().x;
         int y=grass.get(0).getPosition().y;
-        for (int i=1;i<nograss;i++){
-            if (grass.get(i).getPosition().x>x){
-                x=grass.get(i).getPosition().x;
+       for (Grass trawa:grass){
+           if (trawa.getPosition().x >x){
+               x=trawa.getPosition().x;
+           }
+           if (trawa.getPosition().y >y){
+               y=trawa.getPosition().y;
+           }
+       }
+        for (Animal zwierze:animals){
+            if (zwierze.getPosition().x >x){
+                x=zwierze.getPosition().x;
             }
-            if (grass.get(i).getPosition().y>y){
-                y=grass.get(i).getPosition().y;
+            if (zwierze.getPosition().y >y){
+                y=zwierze.getPosition().y;
             }
         }
         return new Vector2d(x,y);
@@ -52,12 +59,20 @@ public class GrassField extends AbstractWorldMap{
     public Vector2d getLeftLow(){
         int x=grass.get(0).getPosition().x;
         int y=grass.get(0).getPosition().y;
-        for (int i=1;i<nograss;i++){
-            if (grass.get(i).getPosition().x<x){
-                x=grass.get(i).getPosition().x;
+        for (Grass trawa:grass){
+            if (trawa.getPosition().x <x){
+                x=trawa.getPosition().x;
             }
-            if (grass.get(i).getPosition().y<y){
-                y=grass.get(i).getPosition().y;
+            if (trawa.getPosition().y <y){
+                y=trawa.getPosition().y;
+            }
+        }
+        for (Animal zwierze:animals){
+            if (zwierze.getPosition().x <x){
+                x=zwierze.getPosition().x;
+            }
+            if (zwierze.getPosition().y <y){
+                y=zwierze.getPosition().y;
             }
         }
         return new Vector2d(x,y);

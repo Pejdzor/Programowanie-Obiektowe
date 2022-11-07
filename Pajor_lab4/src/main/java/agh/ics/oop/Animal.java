@@ -30,7 +30,7 @@ public class Animal {
         return this.position.equals(position);
     }
     public void move(MoveDirection dir){
-        Vector2d moveTo=this.position;
+        Vector2d moveTo = new Vector2d(-1,-1);
         if (dir != null){
             switch(dir){
 
