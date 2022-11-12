@@ -36,12 +36,9 @@ public class RectangularMap extends AbstractWorldMap{
 
 
     @Override
-    public boolean isGrassThere(Vector2d position) {
+    public boolean isSomethingThere(Vector2d position) {
         return false;
     }
 
-    @Override
-    public Object checkIfObjectAt(Vector2d position) {
-        return null;
-    }
+
 }

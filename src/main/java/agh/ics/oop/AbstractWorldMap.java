@@ -1,18 +1,20 @@
 package agh.ics.oop;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
-abstract class AbstractWorldMap implements IWorldMap{
-    public List<Animal> animals= new ArrayList<Animal>();
+abstract class AbstractWorldMap implements IWorldMap,IPositionChangeObserver{
+
+    protected Map<Vector2d,AbstractMapElement> mapElement = new HashMap<>();
     @Override
     public String toString(){
         MapVisualizer mapVisualizer =new MapVisualizer(this);
         return mapVisualizer.draw(getLeftLow(),getRightTop());
 
     }
-    abstract Vector2d getLeftLow();
-    abstract Vector2d getRightTop();
+
     @Override
     public boolean canMoveTo(Vector2d position) {
         if(!(this.objectAt(position) instanceof Animal)){
@@ -25,7 +27,7 @@ abstract class AbstractWorldMap implements IWorldMap{
     @Override
     public boolean place(Animal animal) {
         if(!(this.objectAt(animal.getPosition()) instanceof Animal)){
-            this.animals.add(animal);
+            this.mapElement.put(animal.getPosition(),animal);
             return true;
         }
         return false;
@@ -33,23 +35,32 @@ abstract class AbstractWorldMap implements IWorldMap{
 
     @Override
     public boolean isOccupied(Vector2d position) {
-        for(Animal zwierzaczek:this.animals){
-            if(zwierzaczek.isAt(position)){
+        if(mapElement.containsKey(position)){
+            if (mapElement.get(position) instanceof Animal){
                 return true;
             }
+            return isSomethingThere(position);
         }
-        return isGrassThere(position);
+        return false;
+
     }
-    abstract boolean isGrassThere(Vector2d position);
+    abstract boolean isSomethingThere(Vector2d position);
 
     @Override
     public Object objectAt(Vector2d position) {
-        for(Animal zwierzaczek:this.animals){
-            if(zwierzaczek.isAt(position)){
-                return zwierzaczek;
-            }
+        if(mapElement.containsKey(position)){
+            return mapElement.get(position);
         }
-        return checkIfObjectAt(position);
+        return null;
     }
-    abstract Object checkIfObjectAt(Vector2d position);
+    @Override
+    public void positionChanged(Vector2d oldPosition, Vector2d newPosition){
+        if (mapElement.containsKey(oldPosition)) {
+            AbstractMapElement zwierze=mapElement.get(oldPosition);
+            mapElement.remove(oldPosition);
+            mapElement.put(newPosition,zwierze);
+        }
+
+
+    }
 }

@@ -5,4 +5,6 @@ public interface IWorldMap {
     boolean place(Animal animal);
     boolean isOccupied(Vector2d position);
     Object objectAt(Vector2d position);
+    Vector2d getRightTop();
+    Vector2d getLeftLow();
 }

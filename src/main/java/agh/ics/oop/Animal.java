@@ -1,6 +1,6 @@
 package agh.ics.oop;
 
-public class Animal {
+public class Animal extends AbstractMapElement {
     private Vector2d position=new Vector2d(2,2);
     private MapDirection orientation=MapDirection.NORTH;
     private IWorldMap map;
@@ -32,22 +32,13 @@ public class Animal {
     public void move(MoveDirection dir){
         Vector2d moveTo=this.position;
         if (dir != null){
-            switch(dir){
-
-                case LEFT:
-                    this.orientation=this.orientation.previous();
-                    break;
-                case RIGHT:
-                    this.orientation=this.orientation.next();
-                    break;
-                case FORWARD:
-                        moveTo=this.position.add(this.orientation.toUnitVector());
-                    break;
-                case BACKWARD:
-                        moveTo=this.position.add(this.orientation.toUnitVector().opposite());
-                    break;
-                default:
-                    break;
+            switch (dir) {
+                case LEFT -> this.orientation = this.orientation.previous();
+                case RIGHT -> this.orientation = this.orientation.next();
+                case FORWARD -> moveTo = this.position.add(this.orientation.toUnitVector());
+                case BACKWARD -> moveTo = this.position.add(this.orientation.toUnitVector().opposite());
+                default -> {
+                }
             }
         }
         if (map.canMoveTo(moveTo)){
