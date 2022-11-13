@@ -59,13 +59,11 @@ public class GrassField extends AbstractWorldMap{
     }
     @Override
     public boolean canI(Vector2d position) {
-        if (isSomethingThere(position)){
+        if (objectAt(position) instanceof Grass){
             int size=this.nograss;
             mapElement.remove(position);
             nograss--;
             generateField(size);
-
-
         }
 
         return true;

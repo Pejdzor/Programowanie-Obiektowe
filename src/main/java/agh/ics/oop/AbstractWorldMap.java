@@ -17,10 +17,14 @@ abstract class AbstractWorldMap implements IWorldMap,IPositionChangeObserver{
 
     @Override
     public boolean canMoveTo(Vector2d position) {
-        if(!(this.objectAt(position) instanceof Animal)){
-            return canI(position);
+        if (isOccupied(position)) {
+            if(this.objectAt(position) instanceof Animal){
+                return false;
+            }
+
         }
-        return false;
+
+        return canI(position);
     }
     abstract boolean canI(Vector2d position);
 

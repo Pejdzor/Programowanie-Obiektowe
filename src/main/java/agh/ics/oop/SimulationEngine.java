@@ -5,9 +5,9 @@ import java.util.List;
 
 public class SimulationEngine implements IEngine {
     private MoveDirection[] ruchy;
-    private List<Animal> pieseczki = new ArrayList<>();
+    public List<Animal> pieseczki = new ArrayList<>();
 
-    public SimulationEngine(MoveDirection[] ruchy, IWorldMap map, Vector2d[] pozycje) {
+    public SimulationEngine(MoveDirection[] ruchy, AbstractWorldMap map, Vector2d[] pozycje) {
         for(Vector2d pozycja : pozycje){
             if(!map.isOccupied(pozycja)){
                 Animal zwierzatko = new Animal(map, pozycja);

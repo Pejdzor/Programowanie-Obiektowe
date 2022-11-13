@@ -27,7 +27,7 @@ public class RectangularMap extends AbstractWorldMap{
     }
     @Override
     public boolean canI(Vector2d position){
-        if (position.follows(new Vector2d(0,0))&&position.precedes(new Vector2d(width-1,height-1))){
+        if (position.follows(new Vector2d(0,0))&& position.precedes(new Vector2d(width-1,height-1))){
             return true;
         }
         return false;
