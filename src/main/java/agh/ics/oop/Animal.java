@@ -15,11 +15,9 @@ public class Animal extends AbstractMapElement {
 
     }
     void removeObserver(IPositionChangeObserver observer){
-        for(IPositionChangeObserver obserwator:this.observer){
-            if( obserwator.equals(observer)){
-                this.observer.remove(obserwator);
-            }
-        }
+                this.observer.remove(observer);
+
+
     }
 
     public String toString(){
@@ -62,8 +60,8 @@ public class Animal extends AbstractMapElement {
             }
         }
         if (map.canMoveTo(moveTo) && !(moveTo.equals(this.position))){
-            for (IPositionChangeObserver obserwator:observer){
-                obserwator.positionChanged(this.position,moveTo);
+            for (IPositionChangeObserver observ:observer){
+                observ.positionChanged(this.position,moveTo);
             }
             position=moveTo;
         }

@@ -1,32 +1,32 @@
 package agh.ics.oop;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class OptionParser {
-    public static MoveDirection[] parse(String[] moves){
-        MoveDirection[] dirArr=new MoveDirection[moves.length];
-        int i=0;
+    public static List<MoveDirection> parse(List<String> moves)throws IllegalArgumentException{
+        List<MoveDirection> dirArr=new ArrayList<>();
         for (String arg:moves){
             switch(arg){
                 case "f","foward":
-                    dirArr[i]=MoveDirection.FORWARD;
-                    i++;
+                    dirArr.add(MoveDirection.FORWARD);
+
                     break;
                 case "b","backward":
-                    dirArr[i]=MoveDirection.BACKWARD;
-                    i++;
+                    dirArr.add(MoveDirection.BACKWARD);
+
                     break;
                 case "l","left":
-                    dirArr[i]=MoveDirection.LEFT;
-                    i++;
+                    dirArr.add(MoveDirection.LEFT);
+
                     break;
                 case "r","right":
-                    dirArr[i]=MoveDirection.RIGHT;
-                    i++;
+                    dirArr.add(MoveDirection.RIGHT);
                     break;
                 default:
-                    break;
+                    throw new IllegalArgumentException(arg + " is not a legal move");
             }
-
-        }
+            }
         return dirArr;
     }
 }

@@ -5,8 +5,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-abstract class AbstractWorldMap implements IWorldMap,IPositionChangeObserver{
-
+public abstract class AbstractWorldMap implements IWorldMap,IPositionChangeObserver{
+    protected MapBoundary mapBoundary = new MapBoundary();
     protected Map<Vector2d,AbstractMapElement> mapElement = new HashMap<>();
     @Override
     public String toString(){
@@ -29,12 +29,17 @@ abstract class AbstractWorldMap implements IWorldMap,IPositionChangeObserver{
     abstract boolean canI(Vector2d position);
 
     @Override
-    public boolean place(Animal animal) {
-        if(!(this.objectAt(animal.getPosition()) instanceof Animal)){
-            this.mapElement.put(animal.getPosition(),animal);
-            return true;
+    public boolean place(Animal animal) throws IllegalArgumentException{
+        if (mapElement.containsValue(animal)){
+            throw new IllegalArgumentException("Animal is already on the map");
         }
-        return false;
+            if(objectAt(animal.getPosition()) instanceof Animal){
+                throw new IllegalArgumentException("Position "+animal.getPosition()+" is already occupied");
+            }
+            mapElement.put(animal.getPosition(),animal);
+            mapBoundary.add(animal.getPosition());
+            return true;
+
     }
 
     @Override
@@ -63,6 +68,7 @@ abstract class AbstractWorldMap implements IWorldMap,IPositionChangeObserver{
             AbstractMapElement zwierze=mapElement.get(oldPosition);
             mapElement.remove(oldPosition);
             mapElement.put(newPosition,zwierze);
+            mapBoundary.positionChanged(oldPosition, newPosition);
         }
 
 

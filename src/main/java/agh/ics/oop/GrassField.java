@@ -19,49 +19,29 @@ public class GrassField extends AbstractWorldMap{
             position=new Vector2d(x,y);
             flag=true;
             if(mapElement.containsKey(position)){
-                if(!(objectAt(position) instanceof Grass)){
-                    flag=true;
-                }
+                flag=false;
             }
             if (flag){
                 mapElement.put(position,new Grass(position));
+                mapBoundary.add(position);
                 nograss++;
             }
         }
     }
     public Vector2d getRightTop(){
-        int x=Integer.MIN_VALUE;
-        int y=Integer.MIN_VALUE;
-        for (Vector2d positions:mapElement.keySet()){
-            if(positions.x>x){
-                x= positions.x;
-            }
-            if(positions.y>y){
-                y= positions.y;
-            }
-        }
-        return new Vector2d(x,y);
+       return new Vector2d(mapBoundary.xsorted.last().x,mapBoundary.ysorted.last().y);
 
 
     }
     public Vector2d getLeftLow(){
-        int x=Integer.MAX_VALUE;
-        int y=Integer.MAX_VALUE;
-        for (Vector2d positions:mapElement.keySet()){
-            if(positions.x<x){
-                x= positions.x;
-            }
-            if(positions.y<y){
-                y= positions.y;
-            }
-        }
-        return new Vector2d(x,y);
+        return new Vector2d(mapBoundary.xsorted.first().x,mapBoundary.ysorted.first().y);
     }
     @Override
     public boolean canI(Vector2d position) {
         if (objectAt(position) instanceof Grass){
             int size=this.nograss;
             mapElement.remove(position);
+            mapBoundary.remove(position);
             nograss--;
             generateField(size);
         }
