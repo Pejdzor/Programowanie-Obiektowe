@@ -13,7 +13,6 @@ public class MapBoundary implements IPositionChangeObserver{
             return -1;
         }
     });
-
     TreeSet<Vector2d> ysorted = new TreeSet<>(new Comparator<Vector2d>() {
         @Override
         public int compare(Vector2d o1, Vector2d o2) {

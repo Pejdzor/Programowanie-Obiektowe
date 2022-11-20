@@ -36,6 +36,8 @@ public abstract class AbstractWorldMap implements IWorldMap,IPositionChangeObser
             if(objectAt(animal.getPosition()) instanceof Animal){
                 throw new IllegalArgumentException("Position "+animal.getPosition()+" is already occupied");
             }
+
+
             mapElement.put(animal.getPosition(),animal);
             mapBoundary.add(animal.getPosition());
             return true;

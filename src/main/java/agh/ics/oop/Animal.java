@@ -8,6 +8,7 @@ public class Animal extends AbstractMapElement {
     private MapDirection orientation=MapDirection.NORTH;
     private IWorldMap map;
 
+
     private List<IPositionChangeObserver> observer = new ArrayList<>();
 
     void addObserver(IPositionChangeObserver observer){
@@ -15,9 +16,7 @@ public class Animal extends AbstractMapElement {
 
     }
     void removeObserver(IPositionChangeObserver observer){
-                this.observer.remove(observer);
-
-
+        this.observer.remove(observer);
     }
 
     public String toString(){

@@ -30,7 +30,7 @@ public class App extends Application {
             engine.run();
             System.out.println(this.map);
         }catch(IllegalArgumentException e){
-            e.printStackTrace();
+            System.out.println(e.getMessage());
         }
     }
     @Override
@@ -42,7 +42,9 @@ public class App extends Application {
         int cellWidth = 40;
         int cellHeight = 40;
         Vector2d lowLeft=map.getLeftLow();
+        System.out.println(lowLeft);
         Vector2d topRight = map.getRightTop();
+        System.out.println(topRight);
         Label axisLabel = new Label("y\\x");
         GridPane.setHalignment(axisLabel, HPos.CENTER);
         gridPane.getColumnConstraints().add(new ColumnConstraints(cellWidth));
@@ -70,7 +72,7 @@ public class App extends Application {
                 Object element= map.objectAt(pos);
                 Label label= new Label(element.toString());
                 GridPane.setHalignment(label,HPos.CENTER);
-                gridPane.add(label,pos.x-lowLeft.x+1,topRight.y-pos.y+lowLeft.y+1,1,1);
+                gridPane.add(label,pos.x-lowLeft.x+1,topRight.y-pos.y+1,1,1);
 
             }
 
