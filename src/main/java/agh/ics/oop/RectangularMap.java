@@ -33,6 +33,10 @@ public class RectangularMap extends AbstractWorldMap{
         return false;
     }
 
+    @Override
+    boolean pleaseCheck(Vector2d position) {
+        return position.follows(getLeftLow()) && position.precedes(getRightTop());
+    }
 
 
     @Override

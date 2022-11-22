@@ -3,7 +3,7 @@ package agh.ics.oop;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Animal extends AbstractMapElement {
+public class Animal implements IMapElement {
     private Vector2d position=new Vector2d(2,2);
     private MapDirection orientation=MapDirection.NORTH;
     private IWorldMap map;
@@ -43,6 +43,23 @@ public class Animal extends AbstractMapElement {
     public Vector2d getPosition(){
         return this.position;
     }
+
+    @Override
+    public String getMapResource() {
+        String basePath = "src/main/resources/";
+        return basePath+switch (this.orientation){
+            case NORTH -> "up.png";
+            case EAST -> "right.png";
+            case SOUTH -> "down.png";
+            case WEST -> "left.png";
+        };
+    }
+
+    @Override
+    public String toStringRepresentation() {
+        return "Animal "+this.getPosition().toString();
+    }
+
     public boolean isAt(Vector2d position){
         return this.position.equals(position);
     }
@@ -58,7 +75,7 @@ public class Animal extends AbstractMapElement {
                 }
             }
         }
-        if (map.canMoveTo(moveTo) && !(moveTo.equals(this.position))){
+        if (!(moveTo.equals(this.position) && map.canMoveTo(moveTo) )){
             for (IPositionChangeObserver observ:observer){
                 observ.positionChanged(this.position,moveTo);
             }

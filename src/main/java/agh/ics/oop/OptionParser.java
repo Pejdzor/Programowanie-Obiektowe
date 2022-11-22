@@ -4,8 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class OptionParser {
-    public static List<MoveDirection> parse(List<String> moves)throws IllegalArgumentException{
-        List<MoveDirection> dirArr=new ArrayList<>();
+    public static ArrayList<MoveDirection> parse(List<String> moves)throws IllegalArgumentException{
+        ArrayList<MoveDirection> dirArr=new ArrayList<>();
         for (String arg:moves){
             switch(arg){
                 case "f","foward":

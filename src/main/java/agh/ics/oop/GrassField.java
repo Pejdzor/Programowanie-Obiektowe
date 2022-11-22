@@ -38,7 +38,8 @@ public class GrassField extends AbstractWorldMap{
     }
     @Override
     public boolean canI(Vector2d position) {
-        if (objectAt(position) instanceof Grass){
+        if (mapElement.get(position) instanceof Grass){
+            System.out.println("chuj");
             int size=this.nograss;
             mapElement.remove(position);
             mapBoundary.remove(position);
@@ -49,6 +50,10 @@ public class GrassField extends AbstractWorldMap{
         return true;
     }
 
+    @Override
+    boolean pleaseCheck(Vector2d position) {
+        return canI(position);
+    }
 
 
     @Override

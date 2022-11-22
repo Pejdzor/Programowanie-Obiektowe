@@ -7,7 +7,7 @@ import java.util.Map;
 
 public abstract class AbstractWorldMap implements IWorldMap,IPositionChangeObserver{
     protected MapBoundary mapBoundary = new MapBoundary();
-    protected Map<Vector2d,AbstractMapElement> mapElement = new HashMap<>();
+    protected Map<Vector2d,IMapElement> mapElement = new HashMap<>();
     @Override
     public String toString(){
         MapVisualizer mapVisualizer =new MapVisualizer(this);
@@ -21,9 +21,7 @@ public abstract class AbstractWorldMap implements IWorldMap,IPositionChangeObser
             if(this.objectAt(position) instanceof Animal){
                 return false;
             }
-
         }
-
         return canI(position);
     }
     abstract boolean canI(Vector2d position);
@@ -33,16 +31,29 @@ public abstract class AbstractWorldMap implements IWorldMap,IPositionChangeObser
         if (mapElement.containsValue(animal)){
             throw new IllegalArgumentException("Animal is already on the map");
         }
-            if(objectAt(animal.getPosition()) instanceof Animal){
+        if (mapElement.containsKey(animal.getPosition())){
+            if (mapElement.get(animal.getPosition()) instanceof Animal){
                 throw new IllegalArgumentException("Position "+animal.getPosition()+" is already occupied");
+            }else{
+                if(pleaseCheck(animal.getPosition())){
+                    mapElement.put(animal.getPosition(),animal);
+                    mapBoundary.add(animal.getPosition());
+                    return true;
+                }else{
+                    throw new IllegalArgumentException("Position "+animal.getPosition()+" is out of range");
+                }
             }
-
-
+        }else{
             mapElement.put(animal.getPosition(),animal);
             mapBoundary.add(animal.getPosition());
             return true;
+        }
+
+
 
     }
+
+  abstract boolean pleaseCheck(Vector2d position);
 
     @Override
     public boolean isOccupied(Vector2d position) {
@@ -58,16 +69,20 @@ public abstract class AbstractWorldMap implements IWorldMap,IPositionChangeObser
     abstract boolean isSomethingThere(Vector2d position);
 
     @Override
-    public Object objectAt(Vector2d position) {
+    public IMapElement objectAt(Vector2d position) {
         if(mapElement.containsKey(position)){
-            return mapElement.get(position);
+            if(mapElement.get(position) instanceof Animal) {
+                return (Animal) mapElement.get(position);
+            }else{
+                return (Grass) mapElement.get(position);
+            }
         }
         return null;
     }
     @Override
     public void positionChanged(Vector2d oldPosition, Vector2d newPosition){
         if (mapElement.containsKey(oldPosition)) {
-            AbstractMapElement zwierze=mapElement.get(oldPosition);
+            IMapElement zwierze=mapElement.get(oldPosition);
             mapElement.remove(oldPosition);
             mapElement.put(newPosition,zwierze);
             mapBoundary.positionChanged(oldPosition, newPosition);

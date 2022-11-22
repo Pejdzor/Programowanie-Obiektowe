@@ -2,6 +2,9 @@ package agh.ics.oop;
 
 import org.junit.jupiter.api.Test;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 class AnimalTest {
@@ -18,7 +21,7 @@ class AnimalTest {
 
         // Test Parsera
         String[] moves = {"f f szybciej piesku r f l backward backward xd right ruchy b left forward"};
-        MoveDirection[] instrukcje = OptionParser.parse(moves);
+        ArrayList<MoveDirection> instrukcje = OptionParser.parse(Arrays.asList(moves));
         for (MoveDirection mov:instrukcje){
             pies.move(mov);
         }
